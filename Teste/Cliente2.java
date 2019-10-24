@@ -12,8 +12,9 @@ public class Cliente2 {
 		Scanner teclado = new Scanner(System.in);
 		Socket clienteSocket = new Socket("localhost", 3002);
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
-		int portaCliente1 = inFromServer.read();
-		Node u2 = new Node(InetAddress.getByName("localhost"),portaCliente1);
+		int portaCliente1 = Integer.parseInt(inFromServer.readLine());
+		clienteSocket.close();
+		Node u2 = new Node(InetAddress.getByName("localhost"),3002,portaCliente1);
 		while(true) {
 			Thread r2 = new Receber(u2,1);
 			r2.start();

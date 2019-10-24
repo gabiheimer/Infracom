@@ -23,13 +23,15 @@ public class Server {
 			OutputStream saidaCliente2 = cliente2.getOutputStream();
 			System.out.println("Conectado segundo cliente!");
 			BufferedWriter bufferedWriterCliente1 = new BufferedWriter(new OutputStreamWriter(new BufferedOutputStream(saidaCliente1)));
-			bufferedWriterCliente1.write(cliente2.getPort());
+			bufferedWriterCliente1.write(Integer.toString(cliente2.getLocalPort()));
 			bufferedWriterCliente1.flush();
 			bufferedWriterCliente1.close();
-			BufferedWriter bufferedWriterCliente2 = new BufferedWriter(new OutputStreamWriter(new BufferedOutputStream(saidaCliente1)));
-			bufferedWriterCliente2.write(cliente1.getPort());
+			BufferedWriter bufferedWriterCliente2 = new BufferedWriter(new OutputStreamWriter(new BufferedOutputStream(saidaCliente2)));
+			bufferedWriterCliente2.write(Integer.toString(cliente1.getLocalPort()));
 			bufferedWriterCliente2.flush();
 			bufferedWriterCliente2.close();
+			cliente1.close();
+			cliente2.close();
 		} catch (BindException e) {
 			System.out.println("Endereço em uso");
 		}catch (Exception e){

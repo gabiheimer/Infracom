@@ -15,8 +15,9 @@ public class Cliente1 {
 		Scanner teclado = new Scanner(System.in);
 		Socket clienteSocket = new Socket("localhost", 3001);
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
-		int portaCliente2 = 3001;
-		Node u1 = new Node(InetAddress.getByName("localhost"),portaCliente2);
+		int portaCliente2 = Integer.parseInt(inFromServer.readLine());
+		clienteSocket.close();
+		Node u1 = new Node(InetAddress.getByName("localhost"),3001,portaCliente2);
 		while(true) {
 			Thread r1 = new Receber(u1,2);
 			r1.start();
@@ -28,12 +29,14 @@ public class Cliente1 {
 
 }
 class Node {
+	int portaNode;
 	int portaSegundoNode;
 	DatagramSocket nodeSocket;
 
-	public Node(InetAddress nodeIP, int portaSegundoNode) throws IOException{
+	public Node(InetAddress nodeIP, int portaNode, int portaSegundoNode) throws IOException{
+		this.portaNode = portaNode;
 		this.portaSegundoNode = portaSegundoNode;
-		nodeSocket = new DatagramSocket();
+		nodeSocket = new DatagramSocket(portaNode);
 	}
 
 	void enviar(InetAddress segundoNodeIP, int portaSegundoNode, String texto) throws IOException {
